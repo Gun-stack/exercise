@@ -9,11 +9,9 @@ public class Seceretary extends Employee {
 
 	}
 
-
 	public void incentive(int pay) {
-        setSalary(getSalary() + (int) (pay * 0.8)); 
+		setSalary(getSalary() + (int) (pay * 0.8));
 
-		
 	}
 
 }
