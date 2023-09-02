@@ -11,22 +11,24 @@ public abstract class Plane {
 		this.fuelSize = fuelSize;
 	}
 	
-	public void refuel(int fuel) {
-		this.fuelSize += fuel;
-	}
-	abstract public void flight(int distance);
-	
 	public String getPlaneName() {
 		return planeName;
 	}
 	public int getFuelSize() {
 		return fuelSize;
 	}
+
 	
+	
+	public void refuel(int fuel) {
+		this.fuelSize += fuel;
+		System.out.println(""+fuel+" 주유 ");
+	}
+	abstract public void flight(int distance);
 	
 	public void info() {
-		System.out.println("plane fuelSize");
-		System.out.println("---------------");
+//		System.out.println("plane fuelSize");
+//		System.out.println("---------------");
 		System.out.println(""+getPlaneName()+"   "+getFuelSize());
 	
 	}

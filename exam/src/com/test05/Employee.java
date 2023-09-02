@@ -7,8 +7,8 @@ public abstract class Employee {
 	String department;
 	int salary;
 	
-	public Employee() {
-	}
+	public Employee() {}
+	
 
 	public Employee(String name,int number, String department, int salary) {
 		this.name = name;
@@ -16,9 +16,32 @@ public abstract class Employee {
 		this.department = department;
 		this.salary = salary;
 	}
-	public abstract void tax();
+	
+	public String getDepartment() {
+		return department;
+	}
+	public String getName() {
+		return name;
+	}
+	public int getNumber() {
+		return number;
+	}
+	public int getSalary() {
+		return salary;
+	}
+	public void setSalary(int salary) {
+		this.salary = salary;
+	}
+	
+	public double tax() {
+        return salary * 0.1; 
+    }	
+	public abstract void incentive(int pay);
+
+	
+	
 	@Override
 	public String toString() {
-		return String.format(department, null)
+		return  name + " " + department + " " + salary;
 	}
 }
