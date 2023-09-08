@@ -30,7 +30,7 @@ public class VendinMachineBiz implements IVendingBachineBiz {
 		int cokeCnt = 0;
 		int totP = 0;
 		for (int i = 0; i < count; i++) {
-			switch (cartList[i].price) {
+			/*switch (cartList[i].price) {
 			case 100:
 				coffeeCnt++;
 				break;
@@ -40,7 +40,17 @@ public class VendinMachineBiz implements IVendingBachineBiz {
 			case 50:
 				cokeCnt++;
 				break;
+			}*/
+			
+			
+			if(cartList[i]instanceof Coffee)
+			{coffeeCnt++;}
+			else if(cartList[i] instanceof Juice) {
+				juiceCnt++;
+			}else if(cartList[i] instanceof Coke) {
+				cokeCnt++;
 			}
+			
 			totP += cartList[i].getPrice();
 		}
 		if (coffeeCnt>0) {
