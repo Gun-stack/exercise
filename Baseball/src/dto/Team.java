@@ -1,5 +1,6 @@
 package dto;
 
+import java.sql.Connection;
 
 public class Team {
 		
@@ -9,7 +10,7 @@ public class Team {
 	
 	public Team() {
 	}
-	public Team(Integer num, String name, String local) {
+	public Team(Connection conn,Integer num, String name, String local) {
 		this.num =num;
 		this.name = name;
 		this.local = local;
