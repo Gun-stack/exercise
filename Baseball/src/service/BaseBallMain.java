@@ -1,50 +1,43 @@
 package service;
 
-import java.util.Scanner;
-
 public class BaseBallMain {
-	 public static void main(String[] args) {
-		BaseBallservice bs= new BaseBallservice();
-		Scanner sc = new Scanner(System.in);
-		
+	public static void main(String[] args) {
+		BaseBallservice bs = new BaseBallservice();
 		while (true) {
-			bs.menu();
-			int sel = sc.nextInt();
-			
+			int sel = bs.menu();
 			switch (sel) {
 			case 1:
 				bs.regTeam();
 				break;
 			case 2:
-				bs.viewTeam();
+				bs.selectTeam();
 				break;
 			case 3:
-				bs.selectTeam();
-			break;
+				bs.viewTeam();
+				break;
 			case 4:
 				bs.regPlayer();
 				break;
 			case 5:
-				bs.spName();
+				bs.searchOfPlayerByName();
 				break;
 			case 6:
-				bs.spBack();
+				bs.searchOfPlayerByBackNumber();
 				break;
 			case 7:
-				bs.spNum();
+				bs.searchOfPlayerByNumber();
 				break;
 			case 8:
-				bs.pot();
+				bs.searchOfplayerInTeam();
 				break;
 			case 0:
 				System.out.println("종료");
-				sc.close();
 				return;
 			default:
 				System.out.println("메뉴값을 다시");
-				
+
 			}
 		}
-		 
+
 	}
 }

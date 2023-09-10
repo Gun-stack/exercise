@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -18,9 +17,7 @@ public class TeamDAO {
 		try {
 			Properties db = new Properties();
 			db.load(new FileInputStream("db.properties"));
-
 			Class.forName(db.getProperty("Driver"));
-
 			conn = DriverManager.getConnection(db.getProperty("url"), db.getProperty("user"),
 					db.getProperty("password"));
 		} catch (Exception e) {
@@ -38,50 +35,42 @@ public class TeamDAO {
 		}
 	}
 
-	public int insertTeam(Team team) {
-		Connection conn = null;
+	public static int insertTeam(Connection conn, Team team) {//팀등록
 		PreparedStatement pstmt = null;
-		int result = 0;
+		int cnt = 0;
 		try {
-			conn = getConnection();
-			String sql = "INSERT INTO team (team_name, local) VALUES (?, ?)";
+			String sql = "INSERT INTO team (NAME, LOCAL) VALUES (?, ?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, team.getName());
 			pstmt.setString(2, team.getLocal());
-			result = pstmt.executeUpdate();
+			cnt = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
 				if (pstmt != null)
 					pstmt.close();
-				if (conn != null)
-					conn.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-
-		return result;
+		return cnt;
 	}
 //팀등록
 
-	public Team selectTeam(String teamname) {
-		Connection conn = null;
+	public static Team selectTeam(Connection conn, String teamname) {// 팀조회 
+		Team team = null;
+		String sql = "SELECT * FROM team WHERE name = ?";
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		Team team = null;
-
 		try {
-			conn = getConnection();
-			String sql = "SELECT * FROM team WHERE teamname = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, teamname);
+
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				team = new Team( rs.getString("teamname"), 
-						rs.getString("local"));
+				team = new Team(rs.getInt("num"), rs.getString("NAME"), rs.getString("LOCAL"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,8 +80,6 @@ public class TeamDAO {
 					rs.close();
 				if (pstmt != null)
 					pstmt.close();
-				if (conn != null)
-					conn.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -101,7 +88,7 @@ public class TeamDAO {
 		return team;
 	}
 
-	public List<Team> selectTeamList() {
+	public List<Team> selectTeamList() { //모든 팀조회
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -110,15 +97,18 @@ public class TeamDAO {
 		try {
 			conn = getConnection();
 			String sql = "SELECT * FROM team";
+
 			pstmt = conn.prepareStatement(sql);
+
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				Team team = new Team(null, rs.getString("teamname"),
-						rs.getString("local"));
+				Team team = new Team(rs.getInt(1), 
+						rs.getString(2), 
+						rs.getString(3));
 				teamList.add(team);
 			}
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
@@ -128,12 +118,48 @@ public class TeamDAO {
 					pstmt.close();
 				if (conn != null)
 					conn.close();
-			} catch (SQLException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 
 		return teamList;
 	}
+	
+	public static String getTeamNameByNum(int teamNum) {//  팀번호로 팀이름 찾기 
+	    Connection conn = null;
+	    PreparedStatement pstmt = null;
+	    ResultSet rs = null;
+	    String teamName = null;
 
+	    try {
+	        conn = getConnection();
+	        String sql = "SELECT name FROM team WHERE num = ?";
+	        pstmt = conn.prepareStatement(sql);
+	        pstmt.setInt(1, teamNum);
+	        rs = pstmt.executeQuery();
+
+	        if (rs.next()) {
+	            teamName = rs.getString(1);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null)
+	                rs.close();
+	            if (pstmt != null)
+	                pstmt.close();
+	            if (conn != null)
+	                conn.close();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return teamName;
+	}
+	
+	
+	
 }
