@@ -49,14 +49,18 @@ public class Bank {
 		System.out.println("[일반계좌 개설]");
 		System.out.print("계좌번호:");
 		String id = sc.nextLine();
+		
 		Account acc = AccountDAO.selectAccountInfo(conn, id);
+		
 		if (acc != null) {
 			AccountDAO.close(conn);
 			throw new BankExecption("계좌오류", BankError.EXISTED);
 		}
+		//중복검사
 		System.out.print("이름:");
 		String name = sc.nextLine();
 		System.out.print("입금액:");
+		
 		int money = Integer.parseInt(sc.nextLine());
 		AccountDAO.insertAccount(conn,new Account(id,name,money));
 		AccountDAO.close(conn);
