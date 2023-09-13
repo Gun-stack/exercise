@@ -7,12 +7,20 @@ CREATE TABLE goods (
 );
 
 CREATE TABLE orders (
-  order_id INT AUTO_INCREMENT PRIMARY KEY,
+  order_no INT AtestdbUTO_INCREMENT PRIMARY KEY,
   customer VARCHAR(100),
   productCode VARCHAR(100) ,
   amount INT,
   isCanceled BOOL
 );
 
+ALTER TABLE goods
+ADD CONSTRAINT unique_code UNIQUE (CODE);
+testdb
+ALTER TABLE orders
+ADD CONSTRAINT fk_productCode
+FOREIGN KEY (productCode)
+REFERENCES goods(CODE);
 
-Insert into goods (name,price,stock,category) VALUES('kk',11,21,'sa');
+START TRANSACTION;
+ROLLBACK;

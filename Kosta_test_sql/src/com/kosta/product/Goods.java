@@ -8,9 +8,10 @@ public class Goods {
 	public final static String CATE_BOOK = "BOOK";
 	public final static String CATE_COMPUTER = "COMPUTER";
 	public final static String CATE_ETC = "ETC";
-
+	
+	
+	private int no;
 	// 제품 코드
-	public int no;
 	private String code ;
 	// 제품 이름
 	private String name;
@@ -27,7 +28,8 @@ public class Goods {
 		this.price=price;
 		this.stock=stock;
 		this.category=category;
-		code = "P-"+no;
+		this.no = PRODUCT_SEQ++;
+	    this.code = "P-" + no; 
 	}
 
 	// Setter, Getter
@@ -70,7 +72,15 @@ public class Goods {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	
 
+	public int getNo() {
+		return no;
+	}
+
+	public void setNo(int no) {
+		this.no = no;
+	}
 
 	// 구현해야 하는 부분
 	// toString override

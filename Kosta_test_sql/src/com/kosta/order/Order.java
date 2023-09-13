@@ -4,7 +4,7 @@ public class Order {
 	
 	//주문 번호용 sequence
 	private static int ORDER_SEQ=1;
-	
+	private int price ;
 	//주문 번호
 	private int no ;
 	//주문 고객명
@@ -21,9 +21,8 @@ public class Order {
 		this.customer=customer;
 		this.productCode=productCode;
 		this.amount=amount;
-		
-		
-		
+		this.isCanceled=false;
+		this.no = ORDER_SEQ++;
 		//구현해야하는 부분
 		
 	}
@@ -59,14 +58,23 @@ public class Order {
 	public void setCanceled(boolean isCanceled) {
 		this.isCanceled = isCanceled;
 	}
+	public void setPrice(int price) {
+	    this.price = price;
+	}
+	public int getPrice() {
+		return price;
+	}
 	
 	//구현해야 하는 부분
 	//toString override
 	@Override
 	public String toString() {
 		return String.format("주문 정보: 주문번호-%d, 주문고객명-%s, "
-				+ "주문상품-%s, 주문수량-%d, 취소여부-"
-				,no,customer,productCode,amount,(isCanceled=false)?"정상":"취소"  );
+				+ "주문상품-%s, 주문수량-%d, 취소여부-%s"
+				,no,customer,productCode,amount, (isCanceled ? "취소" : "정상"));
 		
-	} 
+	}
+
+	
+
 }
