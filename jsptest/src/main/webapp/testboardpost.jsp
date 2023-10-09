@@ -136,6 +136,30 @@ textarea {
 	line-height: normal;
 }
 </style>
+<script>
+function writeCmt()
+{
+    var form = document.getElementById("writeCommentForm");
+    
+    var board = form.comment_board.value
+    var id = form.comment_id.value
+    var content = form.comment_content.value;
+    
+    if(!content)
+    {
+        alert("내용을 입력하세요.");
+        return false;
+    }
+    else
+    {    
+        var param="comment_board="+board+"&comment_id="+id+"&comment_content="+content;
+            
+       //제이쿼리로 어케저케 보냄 
+    }
+}
+</script>
+
+
 </head>
 <body>
 	<%@ include file="header.jsp"%>
@@ -169,7 +193,7 @@ textarea {
 		<!--댓글개수 보여주기  -->
 		
 		<c:if test="${requestScope.testboarCommentList != null}">
-			<c:forEach var="comment" items="${requestScope.testboarCommentList}">
+			<c:forEach var="comment" items="${requestScope.testboardCommentList}">
 				<div class="comment">
 					<div class="com_id">${comment.id}</div>
 					<div class="com_content">${comment.content}</div>
@@ -189,13 +213,16 @@ textarea {
 		
 		
 	<%-- 	<c:if test="${user.id !=null}"> --%>
+		
 			<div class="comment_write">
-				<input type="hidden" name="postnumofcomment" value="${testboard.num}">
-				<input type="hidden" name="commentid" value="${user.id}">
-				<input type="text"  class="com_write" style="border-style: none;" /> 
+			<form id="writeCommentForm">
+				<input type="hidden" name="comment_board" value="${testboard.num}">
+				<input type="hidden" name="comment_id" value="${user.id}">
+				<input type="text"  name="comment_content" class="com_write" style="border-style: none;" /> 
 				<a href="#" onclick="writeCmt()" class="com_submit" style="border-style: none;" >
 				등록
 				</a>
+			</form>	
 			</div>
 		<%-- </c:if> --%>
 		
